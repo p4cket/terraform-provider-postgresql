@@ -562,9 +562,9 @@ func doSetDBIsTemplate(c *Client, dbName string, isTemplate bool) error {
 }
 
 func terminateBConnections(c *Client, dbName string) error {
-	sql := fmt.Sprintf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname '%s' AND pid <> pg_backend_pid();", pq.QuoteIdentifier(dbName))
+	sql := fmt.Sprintf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s' AND pid <> pg_backend_pid();", pq.QuoteIdentifier(dbName))
 	if _, err := c.DB().Exec(sql); err != nil {
-		return fmt.Errorf("Error updating database IS_TEMPLATE: %w", err)
+		return fmt.Errorf("Error terminating database connections: %w", err)
 	}
 
 	return nil
