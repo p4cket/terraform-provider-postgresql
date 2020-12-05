@@ -262,8 +262,8 @@ LEFT JOIN (
     JOIN pg_roles on grantee = pg_roles.oid
     WHERE rolname = $1
 ) privs
-USING (proname, pronamespace, relkind)
-      WHERE nspname = $2 AND relkind = $3
+USING (proname, pronamespace, prokind)
+      WHERE nspname = $2 AND prokind = $3
 GROUP BY pg_proc.proname
 `
 	default:
