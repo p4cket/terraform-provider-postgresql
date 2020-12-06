@@ -277,7 +277,7 @@ func resourcePostgreSQLDatabaseDelete(d *schema.ResourceData, meta interface{}) 
 
 	sql := fmt.Sprintf("DROP DATABASE %s", pq.QuoteIdentifier(dbName))
 	if _, err := c.DB().Exec(sql); err != nil {
-		return fmt.Errorf("Error dropping database 16: %w", err)
+		return fmt.Errorf("Error dropping database 17: %w", err)
 	}
 
 	d.SetId("")
@@ -568,9 +568,9 @@ func terminateBConnections(c *Client, dbName string) error {
 		return fmt.Errorf("Error blocking connections: %w", err)
 	}
 
-	return fmt.Errorf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s' ", pq.QuoteIdentifier(dbName))
+	return fmt.Errorf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s' ", dbName)
 
-	sql := fmt.Sprintf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s' ", pq.QuoteIdentifier(dbName))
+	sql := fmt.Sprintf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s' ", dbName)
 
 	if _, err := c.DB().Exec(sql); err != nil {
 		return fmt.Errorf("Error terminating database connections: %w", err)
