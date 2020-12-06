@@ -562,9 +562,9 @@ func doSetDBIsTemplate(c *Client, dbName string, isTemplate bool) error {
 }
 
 func terminateBConnections(c *Client, dbName string) error {
-	sql := fmt.Sprintf("ALTER DATABASE %s ALLOW_CONNECTIONS false", pq.QuoteIdentifier(dbName))
+	sql2 := fmt.Sprintf("ALTER DATABASE %s ALLOW_CONNECTIONS false", pq.QuoteIdentifier(dbName))
 
-	if _, err := c.DB().Exec(sql); err != nil {
+	if _, err := c.DB().Exec(sql2); err != nil {
 		return fmt.Errorf("Error blocking connections: %w", err)
 	}
 
